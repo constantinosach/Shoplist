@@ -4,41 +4,20 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 
 
-public class MainActivity extends ActionBarActivity {
-
-    private Button LoadListButton = null;
-    private Button CreateListButton = null;
+public class CreateListActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        CreateListButton = (Button) findViewById(R.id.createListButton);
-        LoadListButton = (Button) findViewById(R.id.loadListButton);
-
-        CreateListButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent newListIntent = new Intent(MainActivity.this, CreateListActivity.this);
-            }
-        });
-        LoadListButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
+        setContentView(R.layout.create_list_layout);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_create_list, menu);
         return true;
     }
 
