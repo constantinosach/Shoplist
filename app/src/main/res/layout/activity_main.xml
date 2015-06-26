@@ -19,7 +19,8 @@
         android:layout_marginTop="37dp"
         android:layout_below="@+id/createListButton"
         android:layout_toRightOf="@+id/imageView"
-        android:layout_toEndOf="@+id/imageView" />
+        android:layout_toEndOf="@+id/imageView"
+        android:clickable="true" />
 
     <Button
         android:layout_width="fill_parent"
@@ -29,16 +30,8 @@
         android:layout_gravity="center"
         android:layout_centerVertical="true"
         android:layout_toRightOf="@+id/imageView"
-        android:layout_toEndOf="@+id/imageView" />
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/imageView2"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_toEndOf="@+id/imageView"
+        android:clickable="true" />
 
     <Button
         android:layout_width="wrap_content"
@@ -47,16 +40,18 @@
         android:id="@+id/exitButton"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:clickable="true" />
 
     <Button
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="?"
-        android:id="@+id/button"
+        android:id="@+id/helpButton"
         android:layout_alignTop="@+id/exitButton"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:clickable="true" />
 
 </RelativeLayout>
