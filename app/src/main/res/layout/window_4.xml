@@ -4,6 +4,14 @@
     android:layout_height="match_parent"
     android:weightSum="1">
 
+    <Button
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:text="New Button"
+        android:id="@+id/button2"
+        android:layout_gravity="bottom"
+        android:layout_weight="0.6" />
+
     <EditText
         android:layout_width="80dp"
         android:layout_height="wrap_content"
