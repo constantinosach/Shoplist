@@ -4,7 +4,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -16,28 +15,14 @@
             android:layout_height="80dp"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="List Name"
-            android:id="@+id/textView"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:background="#FFA81A"
-            android:autoText="false" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="80dp"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="List Name"
             android:id="@+id/textView2"
-            android:layout_below="@+id/textView"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
             android:background="#FFA81A"
-            android:autoText="false" />
+            android:autoText="false"
+            android:layout_below="@+id/searchView" />
 
         <Button
             android:layout_width="100dp"
@@ -48,6 +33,15 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:background="#ffffff" />
+
+        <SearchView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/searchView"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
     </RelativeLayout>
 </LinearLayout>
 
