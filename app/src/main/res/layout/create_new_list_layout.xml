@@ -29,18 +29,18 @@
     <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/addList"
+        android:id="@android:id/list"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/addItemButton"
         android:layout_above="@+id/button"
-        android:background="#ffffedd5" />
+        android:background="#ffffedd5"
+        android:layout_below="@+id/textView" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="&lt;"
-        android:id="@+id/button"
+        android:id="@+id/backButton"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
@@ -59,4 +59,37 @@
         android:clickable="true"
         android:background="#ffffa900"
         android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Quantity"
+        android:id="@+id/textView"
+        android:textColor="#000000"
+        android:layout_below="@+id/addItemButton"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Item Name"
+        android:id="@+id/textView2"
+        android:textColor="#000000"
+        android:layout_alignBottom="@+id/textView"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Price"
+        android:id="@+id/textView3"
+        android:textColor="#000000"
+        android:layout_below="@+id/addItemButton"
+        android:layout_alignRight="@+id/saveButton"
+        android:layout_alignEnd="@+id/saveButton" />
+
 </RelativeLayout>

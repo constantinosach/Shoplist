@@ -1,17 +1,107 @@
 package com.shoplist.hackcyprus.shoplistapp;
 
-import android.support.v7.app.ActionBarActivity;
+import android.app.Activity;
+import android.app.ListActivity;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.shoplist.hackcyprus.shoplistapp.data.model.ShoppingList;
+import com.shoplist.hackcyprus.shoplistapp.data.model.ShoppingListItem;
+
+import java.util.ArrayList;
 
 
-public class CreateListActivity extends ActionBarActivity {
+public class CreateListActivity extends ListActivity {
+
+    private ArrayList<ShoppingListItem> items;
+    private ShoppingList shoppingList;
+    private DatabaseHandler dbHandler;
+    private EditText shoppingListName;
+
+    private Button saveButtton;
+    private Button backButton;
+    private Button addItemButton;
+
+    private int totalItems = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_new_list_layout);
+
+        shoppingList = new ShoppingList(0, "");
+        items = new ArrayList<ShoppingListItem>();
+
+        dbHandler = new DatabaseHandler(this);
+
+        //newItemsList = (ListView) findViewById(R.id.list);
+        final NewShoppingListItemsAdapter adapter = new NewShoppingListItemsAdapter(this, items);
+
+        setListAdapter(adapter);
+
+        addItemButton = (Button) findViewById(R.id.addItemButton);
+        saveButtton = (Button) findViewById(R.id.saveButton);
+        backButton  = (Button) findViewById(R.id.backButton);
+        shoppingListName = (EditText) findViewById(R.id.enterListName);
+
+        addItemButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                totalItems++;
+                ShoppingListItem newItem = new ShoppingListItem(0, "Item " + totalItems, 1, 0);
+                //items.add(newItem);
+                adapter.add(newItem);
+            }
+        });
+
+        saveButtton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if( totalItems == 0 ){
+                    Toast msg = Toast.makeText( CreateListActivity.this, "No item to save", Toast.LENGTH_LONG );
+                    msg.show();
+                    return;
+                }
+
+                if(shoppingListName.getText().toString() == "") {
+                    Toast msg = Toast.makeText( CreateListActivity.this, "The shopping list name is required", Toast.LENGTH_LONG );
+                    msg.show();
+                    return;
+                }
+
+                ShoppingList newList = new ShoppingList(0, shoppingListName.getText().toString());
+                int newId = dbHandler.addShoppingList(newList);
+                newList.setId(newId);
+
+                Toast msg = Toast.makeText(CreateListActivity.this, "shopping list successfully added", Toast.LENGTH_LONG);
+                msg.show();
+
+                Intent backIntent = new Intent(CreateListActivity.this, ViewListItemActivity.class);
+                startActivity(backIntent);
+
+            }
+        });
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent backIntent = new Intent(CreateListActivity.this, MainActivity.class);
+                startActivity(backIntent);
+            }
+        });
+
     }
 
     @Override
@@ -35,4 +125,5 @@ public class CreateListActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
 }

@@ -27,10 +27,6 @@ public class ViewShoppingListAdapter extends CursorAdapter {
 
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
-        // quantity
-        // name
-        // price
-        // checked
 
         TextView quantity = (TextView) view.findViewById(R.id.itemQuantityText);
         TextView name = (TextView) view.findViewById(R.id.itemNameText);

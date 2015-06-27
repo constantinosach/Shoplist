@@ -11,18 +11,18 @@ import android.widget.ListView;
 
 public class ViewListItemActivity extends ListActivity {
 
-    private ListView shoppingListItems;
+    private DatabaseHandler dbHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.window_4);
 
-        shoppingListItems = (ListView) findViewById(R.id.shopping_list_items);
+        dbHandler = new DatabaseHandler(this);
 
-        Cursor dbCursor = null;
+        Cursor dbCursor = dbHandler.getAllShoppingListCursor();
         ViewShoppingListAdapter listAdapter = new ViewShoppingListAdapter(this, dbCursor);
-        shoppingListItems.setAdapter(listAdapter);
+        setListAdapter(listAdapter);
     }
 
     @Override
