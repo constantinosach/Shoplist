@@ -1,48 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:weightSum="1"
-    android:id="@+id/">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:background="#EEA632">
 
-    <EditText
-        android:layout_width="80dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/Quantity"
-        android:inputType="number"
-        android:text="Quantity" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="80dp"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="List name"
+        android:id="@+id/textView3"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:background="#FFA81A" />
 
-    <EditText
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/namebox"
-        android:gravity="clip_vertical"
-        android:enabled="false"
-        android:inputType="text"
-        android:layout_weight="0.30"
+    <TextView
+        android:layout_width="100dp"
+        android:layout_height="60dp"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Quantity"
+        android:id="@+id/textView4"
+        android:layout_below="@+id/textView3"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="100dp"
+        android:layout_height="60dp"
+        android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Item Name"
-        android:textColor="#ff000000" />
+        android:id="@+id/textView5"
+        android:layout_below="@+id/textView3"
+        android:layout_toRightOf="@+id/textView4"
+        android:layout_toEndOf="@+id/textView4" />
 
-    <EditText
-        android:layout_width="72dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/price"
-        android:inputType="number"
-        android:text="Price" />
+    <TextView
+        android:layout_width="100dp"
+        android:layout_height="60dp"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Price"
+        android:id="@+id/textView6"
+        android:layout_below="@+id/textView3"
+        android:layout_toRightOf="@+id/textView5"
+        android:layout_toEndOf="@+id/textView5" />
 
     <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/checkBox"
+        android:layout_width="100dp"
+        android:layout_height="60dp"
+        android:id="@+id/checkBox2"
+        android:layout_below="@+id/textView3"
+        android:layout_toRightOf="@+id/textView6"
+        android:layout_toEndOf="@+id/textView6"
         android:clickable="true" />
 
     <Button
-        android:layout_width="100dp"
-        android:layout_height="50dp"
-        android:text="New Button"
-        android:id="@+id/button2"
-        android:layout_gravity="bottom"
-        android:layout_weight="0.6" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Back"
+        android:id="@+id/back_button"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:background="#FFFFFF" />
 
-</LinearLayout>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Edit"
+        android:id="@+id/edit_button"
+        android:layout_alignTop="@+id/back_button"
+        android:layout_alignRight="@+id/checkBox2"
+        android:layout_alignEnd="@+id/checkBox2"
+        android:background="#FFFFFF" />
+</RelativeLayout>
 
