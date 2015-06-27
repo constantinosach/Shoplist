@@ -7,4 +7,5 @@
     <string name="help_button_text">\?</string>
     <string name="title_activity_load_list">LoadListActivity</string>
     <string name="title_activity_view_list_item">View List</string>
+    <string name="search_hint">Search lists</string>
 </resources>

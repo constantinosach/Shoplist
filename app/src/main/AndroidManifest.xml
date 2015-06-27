@@ -21,8 +21,12 @@
             android:label="@string/title_activity_create_list" >
         </activity>
         <activity
-            android:name=".LoadListActivity"
-            android:label="@string/title_activity_load_list" >
+            android:name=".LoadListActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+            <meta-data android:name="android.app.searchable"
+                android:resource="@xml/searchable"/>
         </activity>
         <activity
             android:name=".ViewListItemActivity"
