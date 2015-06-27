@@ -49,12 +49,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         String CREATE_SHOPLISTITEMS_TABLE = "CREATE TABLE " + TABLE_CONTACTS + "("
                 + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + KEY_NAME + " TEXT,"
-                + KEY_QUANTITY + " INT," + KEY_PRICE + " REAL" + ")";
+                + KEY_QUANTITY + " INT," + KEY_PRICE + " REAL" + "); ";
         String CREATE_SHOPLIST_TABLE = "CREATE TABLE " + TABLE_SHOPLIST + "("
-                + KEY_SHOPLIST_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + KEY_SHOPLIST_NAME + " TEXT)";
-        String SQL_TABLES = CREATE_SHOPLISTITEMS_TABLE + CREATE_SHOPLIST_TABLE;
+                + KEY_SHOPLIST_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + KEY_SHOPLIST_NAME + " TEXT); ";
+        //String SQL_TABLES = CREATE_SHOPLIST_TABLE + CREATE_SHOPLISTITEMS_TABLE;
 
-        db.execSQL(SQL_TABLES);
+        db.execSQL(CREATE_SHOPLIST_TABLE);
+        db.execSQL(CREATE_SHOPLISTITEMS_TABLE);
+
     }
 
     // Upgrading database
@@ -129,7 +131,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public List<ShoppingListItem> getAllShoppingListItems() {
         SQLiteDatabase db = this.getReadableDatabase();
         List<ShoppingListItem> items = new ArrayList<ShoppingListItem>();
-        String query = "Select * from " + TABLE_CONTACTS;
+        String query = "Select id as _id,  from " + TABLE_CONTACTS;
         Cursor cursor = db.rawQuery(query, null);
 
         if (cursor.moveToFirst()) {
@@ -141,7 +143,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         return items;
     }
-    
+
     //Raw data
     public Cursor getRawAllShoppingListItems() {
         SQLiteDatabase db = this.getReadableDatabase();
@@ -154,22 +156,23 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     //Raw data
     public Cursor getRawAllShoppingLists() {
         SQLiteDatabase db = this.getReadableDatabase();
-        String query = "Select * from " + TABLE_SHOPLIST;
+        String query = "Select id as _id, name from " + TABLE_SHOPLIST;
         Cursor cursor = db.rawQuery(query, null);
 
         return cursor;
     }
 
     //Create list
-    public void addShoppingList(ShoppingList list) {
+    public int addShoppingList(ShoppingList list) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 
         values.put(KEY_SHOPLIST_NAME, list.getName());
 
         // Inserting Row
-        db.insert(TABLE_CONTACTS, null, values);
+        int newId  = (int) db.insert(TABLE_CONTACTS, null, values);
         db.close(); // Closing database connection
+        return newId;
     }
 
     //Read list

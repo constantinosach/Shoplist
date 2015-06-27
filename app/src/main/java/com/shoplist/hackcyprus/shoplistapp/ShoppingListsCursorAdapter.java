@@ -14,7 +14,7 @@ import android.widget.TextView;
 public class ShoppingListsCursorAdapter extends CursorAdapter {
 
     public ShoppingListsCursorAdapter(Context context, Cursor cursor){
-        super( context, cursor, 0 );
+        super( context, cursor, false );
     }
 
     @Override
@@ -25,7 +25,7 @@ public class ShoppingListsCursorAdapter extends CursorAdapter {
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
         TextView itemName = (TextView) view.findViewById(R.id.shopping_list_item_name);
-        itemName.setText( cursor.getColumnIndexOrThrow("name") );
+        itemName.setText( cursor.getString(1) );
     }
 
 

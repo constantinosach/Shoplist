@@ -18,6 +18,7 @@ public class LoadListActivity extends ListActivity {
 
     ListView shopListItemsListView = null;
     EditText searchBoxEditText = null;
+    DatabaseHandler dbHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,18 +26,21 @@ public class LoadListActivity extends ListActivity {
         setContentView(R.layout.window_3);
 
         shopListItemsListView = (ListView) findViewById(R.id.shopping_list_items);
-        Cursor dbCursor = null;
+        dbHandler = new DatabaseHandler(this);
+        Cursor dbCursor = dbHandler.getRawAllShoppingLists();
 
         ShoppingListsCursorAdapter adapter = new ShoppingListsCursorAdapter(this, dbCursor);
-        shopListItemsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+        /*getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent viewListItem = new Intent( LoadListActivity.this, ViewListItemActivity.class );
                 viewListItem.putExtra( "list_id", id );
-
                 startActivity(viewListItem);
             }
-        });
+        });*/
+
+        setListAdapter(adapter);
     }
 
     @Override

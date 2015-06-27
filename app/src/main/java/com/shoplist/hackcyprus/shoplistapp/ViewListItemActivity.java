@@ -20,7 +20,7 @@ public class ViewListItemActivity extends ListActivity {
 
         dbHandler = new DatabaseHandler(this);
 
-        Cursor dbCursor = dbHandler.getAllShoppingListCursor();
+        Cursor dbCursor = null;
         ViewShoppingListAdapter listAdapter = new ViewShoppingListAdapter(this, dbCursor);
         setListAdapter(listAdapter);
     }
