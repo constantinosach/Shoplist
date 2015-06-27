@@ -1,78 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
-    android:background="#EEA632">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="80dp"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="List name"
-        android:id="@+id/textView3"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:background="#FFA81A" />
 
-    <TextView
-        android:layout_width="100dp"
-        android:layout_height="60dp"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Quantity"
-        android:id="@+id/textView4"
-        android:layout_below="@+id/textView3"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_horizontal"
+        android:background="#EEA632">
+        <ListView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/shopping_list_items"
+            android:layout_alignBottom="@+id/button3"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
 
-    <TextView
-        android:layout_width="100dp"
-        android:layout_height="60dp"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Item Name"
-        android:id="@+id/textView5"
-        android:layout_below="@+id/textView3"
-        android:layout_toRightOf="@+id/textView4"
-        android:layout_toEndOf="@+id/textView4" />
-
-    <TextView
-        android:layout_width="100dp"
-        android:layout_height="60dp"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Price"
-        android:id="@+id/textView6"
-        android:layout_below="@+id/textView3"
-        android:layout_toRightOf="@+id/textView5"
-        android:layout_toEndOf="@+id/textView5" />
-
-    <CheckBox
-        android:layout_width="100dp"
-        android:layout_height="60dp"
-        android:id="@+id/checkBox2"
-        android:layout_below="@+id/textView3"
-        android:layout_toRightOf="@+id/textView6"
-        android:layout_toEndOf="@+id/textView6"
-        android:clickable="true" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Back"
-        android:id="@+id/back_button"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:background="#FFFFFF" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Edit"
-        android:id="@+id/edit_button"
-        android:layout_alignTop="@+id/back_button"
-        android:layout_alignRight="@+id/checkBox2"
-        android:layout_alignEnd="@+id/checkBox2"
-        android:background="#FFFFFF" />
-</RelativeLayout>
-
+        <Button
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:text="Back"
+            android:id="@+id/button3"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:background="#ffffff"
+            android:textColor="#000000" />
+    </RelativeLayout>
+</LinearLayout>

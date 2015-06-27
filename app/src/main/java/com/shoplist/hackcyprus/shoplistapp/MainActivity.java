@@ -26,12 +26,14 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 Intent newListIntent = new Intent(MainActivity.this, CreateListActivity.class);
+                MainActivity.this.startActivity(newListIntent);
             }
         });
         LoadListButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent newListIntent = new Intent(MainActivity.this, CreateListActivity.class);
+                MainActivity.this.startActivity(newListIntent);
             }
         });
     }
