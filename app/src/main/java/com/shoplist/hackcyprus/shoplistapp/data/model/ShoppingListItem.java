@@ -5,7 +5,7 @@ package com.shoplist.hackcyprus.shoplistapp.data.model;
  */
 public class ShoppingListItem {
     private int id;
-    private string name;
+    private String name;
     private int quantity;
     private double price;
 
@@ -17,11 +17,11 @@ public class ShoppingListItem {
         this.id = id;
     }
 
-    public string getName() {
+    public String getName() {
         return name;
     }
 
-    public void setName(string name) {
+    public void setName(String name) {
         this.name = name;
     }
 
@@ -40,4 +40,3 @@ public class ShoppingListItem {
     public void setPrice(double price) {
         this.price = price;
     }
-}
