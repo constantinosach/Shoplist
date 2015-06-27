@@ -106,4 +106,55 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         return items;
     }
+
+    //Create list
+    public void addShoppingList(ShoppingList list) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(KEY_SHOPLIST_ID, list.getId());
+        values.put(KEY_SHOPLIST_NAME, list.getName());
+
+        // Inserting Row
+        db.insert(TABLE_CONTACTS, null, values);
+        db.close(); // Closing database connection
+    }
+
+    //Read list
+    public ShoppingList getShoppingList(int id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String[] fields;
+        fields = new String[2];
+        fields[0] = KEY_SHOPLIST_ID;
+        fields[1] = KEY_SHOPLIST_NAME;
+        Cursor cursor = db.query(TABLE_SHOPLIST, new String[]{KEY_SHOPLIST_ID,
+                        KEY_SHOPLIST_NAME}, KEY_SHOPLIST_ID + "=?",
+                new String[]{String.valueOf(id)}, null, null, null, null);
+        if (cursor != null) {
+            cursor.moveToFirst();
+        }
+        ShoppingList item = new ShoppingList(Integer.parseInt(cursor.getString(0)), cursor.getString(1));
+
+        return item;
+    }
+
+    // Update list
+    public int updateShoppingList(ShoppingList list) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(KEY_SHOPLIST_NAME, list.getName());
+
+        // updating row
+        return db.update(TABLE_SHOPLIST, values, KEY_SHOPLIST_ID + " = ?",
+                new String[] { String.valueOf(list.getId()) });
+    }
+
+    // Delete list
+    public void deleteContact(ShoppingList list) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_SHOPLIST, KEY_SHOPLIST_ID + " = ?",
+                new String[]{String.valueOf(list.getId())});
+        db.close();
+    }
 }
