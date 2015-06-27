@@ -9,6 +9,9 @@ import com.shoplist.hackcyprus.shoplistapp.data.model.ShoppingListItem;
 
 import android.content.Context;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by flangofas on 27/06/15.
  */
@@ -88,5 +91,19 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return item;
     }
 
+    public List<ShoppingListItem> getAllShoppingListItems() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        List<ShoppingListItem> items = new ArrayList<ShoppingListItem>();
+        String query = "Select * from " + TABLE_CONTACTS;
+        Cursor cursor = db.rawQuery(query, null);
 
+        if (cursor.moveToFirst()) {
+            do {
+                ShoppingListItem item = new ShoppingListItem(Integer.parseInt(cursor.getString(0)), cursor.getString(1), Integer.parseInt(cursor.getString(2)), cursor.getDouble(3));
+                items.add(item);
+            } while(cursor.moveToNext());
+        }
+
+        return items;
+    }
 }
