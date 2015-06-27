@@ -48,10 +48,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         String CREATE_SHOPLISTITEMS_TABLE = "CREATE TABLE " + TABLE_CONTACTS + "("
-                + KEY_ID + " INTEGER PRIMARY KEY," + KEY_NAME + " TEXT,"
+                + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + KEY_NAME + " TEXT,"
                 + KEY_QUANTITY + " INT," + KEY_PRICE + " REAL" + ")";
         String CREATE_SHOPLIST_TABLE = "CREATE TABLE " + TABLE_SHOPLIST + "("
-                + KEY_SHOPLIST_ID + " INTEGER PRIMARY KEY," + KEY_SHOPLIST_NAME + " TEXT)";
+                + KEY_SHOPLIST_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + KEY_SHOPLIST_NAME + " TEXT)";
         String SQL_TABLES = CREATE_SHOPLISTITEMS_TABLE + CREATE_SHOPLIST_TABLE;
 
         db.execSQL(SQL_TABLES);
@@ -72,6 +72,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     /**
      * All CRUD(Create, Read, Update, Delete) Operations
      */
+    //Create ShoppingListItem
     public void addShoppingListItem(ShoppingListItem item) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -85,6 +86,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.close(); // Closing database connection
     }
 
+    //Read ShoppingListItem
     public ShoppingListItem getShoppingListItem(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
         String[] fields;
@@ -103,6 +105,26 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         return item;
     }
+    // Update ShoppingListItem
+    public int updateShoppingListItem(ShoppingListItem item) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(KEY_NAME, item.getName());
+
+        // updating row
+        return db.update(TABLE_CONTACTS, values, KEY_ID + " = ?",
+                new String[] { String.valueOf(item.getId()) });
+    }
+
+    // Delete ShoppingListItem
+    public void deleteShoppingListItem(ShoppingListItem item) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_CONTACTS, KEY_ID + " = ?",
+                new String[]{String.valueOf(item.getId())});
+        db.close();
+    }
+
 
     public List<ShoppingListItem> getAllShoppingListItems() {
         SQLiteDatabase db = this.getReadableDatabase();
@@ -125,7 +147,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 
-        values.put(KEY_SHOPLIST_ID, list.getId());
         values.put(KEY_SHOPLIST_NAME, list.getName());
 
         // Inserting Row
@@ -164,7 +185,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     // Delete list
-    public void deleteContact(ShoppingList list) {
+    public void deleteShoppingList(ShoppingList list) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_SHOPLIST, KEY_SHOPLIST_ID + " = ?",
                 new String[]{String.valueOf(list.getId())});
