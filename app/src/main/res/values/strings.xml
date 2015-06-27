@@ -6,4 +6,5 @@
     <string name="title_activity_create_list">New List</string>
     <string name="help_button_text">\?</string>
     <string name="title_activity_load_list">LoadListActivity</string>
+    <string name="title_activity_view_list_item">View List</string>
 </resources>

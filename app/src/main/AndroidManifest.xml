@@ -24,6 +24,10 @@
             android:name=".LoadListActivity"
             android:label="@string/title_activity_load_list" >
         </activity>
+        <activity
+            android:name=".ViewListItemActivity"
+            android:label="@string/title_activity_view_list_item" >
+        </activity>
     </application>
 
 </manifest>
