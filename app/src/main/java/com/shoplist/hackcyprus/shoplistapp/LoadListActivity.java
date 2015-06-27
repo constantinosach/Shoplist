@@ -1,23 +1,36 @@
 package com.shoplist.hackcyprus.shoplistapp;
 
+import android.app.ListActivity;
+import android.database.Cursor;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.TextView;
 
 
-public class CreateListActivity extends ActionBarActivity {
+public class LoadListActivity extends ListActivity {
+
+    ListView shopListItemsListView = null;
+    EditText searchBoxEditText = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.create_new_list_layout);
+        setContentView(R.layout.window_3);
+
+        shopListItemsListView = (TextView) findViewById(R.id.shopping_list_items);
+        Cursor dbCursor = null;
+
+        ShoppingListsCursorAdapter adapter = new ShoppingListsCursorAdapter(this, dbCursor);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_create_list, menu);
+        getMenuInflater().inflate(R.menu.menu_load_list, menu);
         return true;
     }
 
