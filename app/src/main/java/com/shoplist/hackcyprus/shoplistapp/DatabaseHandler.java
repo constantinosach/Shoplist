@@ -48,10 +48,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         String CREATE_SHOPLISTITEMS_TABLE = "CREATE TABLE " + TABLE_CONTACTS + "("
-                + KEY_ID + " INTEGER PRIMARY KEY," + KEY_NAME + " TEXT,"
+                + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + KEY_NAME + " TEXT,"
                 + KEY_QUANTITY + " INT," + KEY_PRICE + " REAL" + ")";
         String CREATE_SHOPLIST_TABLE = "CREATE TABLE " + TABLE_SHOPLIST + "("
-                + KEY_SHOPLIST_ID + " INTEGER PRIMARY KEY," + KEY_SHOPLIST_NAME + " TEXT)";
+                + KEY_SHOPLIST_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + KEY_SHOPLIST_NAME + " TEXT)";
         String SQL_TABLES = CREATE_SHOPLISTITEMS_TABLE + CREATE_SHOPLIST_TABLE;
 
         db.execSQL(SQL_TABLES);
@@ -147,7 +147,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 
-        values.put(KEY_SHOPLIST_ID, list.getId());
         values.put(KEY_SHOPLIST_NAME, list.getName());
 
         // Inserting Row
