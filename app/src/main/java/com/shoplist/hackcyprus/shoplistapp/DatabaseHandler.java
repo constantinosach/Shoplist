@@ -9,9 +9,13 @@ import com.shoplist.hackcyprus.shoplistapp.data.model.ShoppingList;
 import com.shoplist.hackcyprus.shoplistapp.data.model.ShoppingListItem;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 
 /**
  * Created by flangofas on 27/06/15.
@@ -107,6 +111,19 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         return item;
     }
+
+    // get shoppingListItems for a shoppingList
+    public Cursor getRawShoppingListItemsForList(int listId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        List<ShoppingListItem> items = new ArrayList<ShoppingListItem>();
+        String query = "Select id as _id, " + KEY_NAME +  ", " + KEY_PRICE + ", " + KEY_QUANTITY + ", " +  KEY_SHOPLIST_ID + "  from " + TABLE_CONTACTS
+                      + " WHERE " + KEY_SHOPLIST_ID + " = ?";
+
+        Cursor cursor = db.rawQuery(query, new String[] { String.valueOf(listId) });
+
+        return cursor;
+    }
+
     // Update ShoppingListItem
     public int updateShoppingListItem(ShoppingListItem item) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -162,6 +179,23 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return cursor;
     }
 
+    public List<ShoppingList> getAllShoppingLists() {
+        List<ShoppingList> shoppingLists = new ArrayList<ShoppingList>();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "Select id as _id, name from " + TABLE_SHOPLIST;
+        Cursor cursor = db.rawQuery(query, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                ShoppingList listItem = new ShoppingList(Integer.parseInt(cursor.getString(0)), cursor.getString(1));
+                shoppingLists.add(listItem);
+            } while(cursor.moveToNext());
+        }
+
+        return shoppingLists;
+    }
+
     //Create list
     public int addShoppingList(ShoppingList list) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -170,7 +204,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(KEY_SHOPLIST_NAME, list.getName());
 
         // Inserting Row
-        int newId  = (int) db.insert(TABLE_CONTACTS, null, values);
+        int newId  = (int) db.insert(TABLE_SHOPLIST, null, values);
         db.close(); // Closing database connection
         return newId;
     }

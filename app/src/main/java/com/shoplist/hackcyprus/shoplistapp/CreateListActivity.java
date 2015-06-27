@@ -88,7 +88,7 @@ public class CreateListActivity extends ListActivity {
                 Toast msg = Toast.makeText(CreateListActivity.this, "shopping list successfully added", Toast.LENGTH_LONG);
                 msg.show();
 
-                Intent backIntent = new Intent(CreateListActivity.this, ViewListItemActivity.class);
+                Intent backIntent = new Intent(CreateListActivity.this, MainActivity.class);
                 startActivity(backIntent);
 
             }

@@ -13,32 +13,44 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.content.Intent;
 
+import com.shoplist.hackcyprus.shoplistapp.data.model.ShoppingList;
+
+import java.util.List;
+
 
 public class LoadListActivity extends ListActivity {
 
     ListView shopListItemsListView = null;
     EditText searchBoxEditText = null;
     DatabaseHandler dbHandler;
+    private ShoppingListsCursorAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.window_3);
 
-        shopListItemsListView = (ListView) findViewById(R.id.shopping_list_items);
+
         dbHandler = new DatabaseHandler(this);
         Cursor dbCursor = dbHandler.getRawAllShoppingLists();
+        List<ShoppingList> lists = dbHandler.getAllShoppingLists();
 
-        ShoppingListsCursorAdapter adapter = new ShoppingListsCursorAdapter(this, dbCursor);
+        adapter = new ShoppingListsCursorAdapter(this, dbCursor);
 
-        /*getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent viewListItem = new Intent( LoadListActivity.this, ViewListItemActivity.class );
-                viewListItem.putExtra( "list_id", id );
-                startActivity(viewListItem);
+                Cursor cursor = (Cursor) adapter.getItem(position);
+
+                if(null != cursor) {
+                    Intent viewListItem = new Intent( LoadListActivity.this, ViewListItemActivity.class );
+                    int itemId = cursor.getInt(0);
+                    viewListItem.putExtra("list_id", itemId );
+                    startActivity(viewListItem);
+                }
+
             }
-        });*/
+        });
 
         setListAdapter(adapter);
     }

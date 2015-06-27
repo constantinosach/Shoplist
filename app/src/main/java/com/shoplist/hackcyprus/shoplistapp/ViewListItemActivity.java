@@ -1,6 +1,7 @@
 package com.shoplist.hackcyprus.shoplistapp;
 
 import android.app.ListActivity;
+import android.content.Intent;
 import android.database.Cursor;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -20,7 +21,11 @@ public class ViewListItemActivity extends ListActivity {
 
         dbHandler = new DatabaseHandler(this);
 
-        Cursor dbCursor = null;
+        Intent intent = getIntent();
+        int listId = intent.getIntExtra("list_id", 0);
+
+        Cursor dbCursor = dbHandler.getRawShoppingListItemsForList(listId);
+
         ViewShoppingListAdapter listAdapter = new ViewShoppingListAdapter(this, dbCursor);
         setListAdapter(listAdapter);
     }
