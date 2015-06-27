@@ -52,7 +52,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + KEY_NAME + " TEXT,"
                 + KEY_QUANTITY + " INT," + KEY_PRICE + " REAL" + "); ";
         String CREATE_SHOPLIST_TABLE = "CREATE TABLE " + TABLE_SHOPLIST + "("
-                + KEY_SHOPLIST_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + KEY_SHOPLIST_NAME + " TEXT, ";
+                + KEY_SHOPLIST_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + KEY_SHOPLIST_NAME + " TEXT, "
                 + "FOREIGN KEY(" + KEY_LIST_ID  + ") REFERENCES list(id));";
 
         db.execSQL(CREATE_SHOPLIST_TABLE);
@@ -116,6 +116,16 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         return item;
     }
+
+    public Cursor getRawShoppingListItemsForList(int listId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery( "SELECT id as _id, " + KEY_NAME + ", " + KEY_QUANTITY + ", " + KEY_PRICE + ", " + KEY_SHOPLIST_ID + ", "
+         + " WHERE " + KEY_SHOPLIST_ID + " = ? ",
+        new String[] { String.valueOf( listId ) });
+
+        return cursor;
+    }
+
     // Update ShoppingListItem
     public int updateShoppingListItem(ShoppingListItem item) {
         SQLiteDatabase db = this.getWritableDatabase();

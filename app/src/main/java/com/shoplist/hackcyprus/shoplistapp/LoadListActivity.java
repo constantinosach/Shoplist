@@ -27,7 +27,6 @@ public class LoadListActivity extends ListActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.window_3);
 
-        shopListItemsListView = (ListView) findViewById(R.id.shopping_list_items);
         dbHandler = new DatabaseHandler(this);
         Cursor dbCursor = dbHandler.getRawAllShoppingLists();
 
@@ -38,17 +37,20 @@ public class LoadListActivity extends ListActivity {
             Log.d("query", query);
         }
 
+        final ShoppingListsCursorAdapter adapter = new ShoppingListsCursorAdapter(this, dbCursor);
 
-        ShoppingListsCursorAdapter adapter = new ShoppingListsCursorAdapter(this, dbCursor);
-
-        /*getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent viewListItem = new Intent( LoadListActivity.this, ViewListItemActivity.class );
-                viewListItem.putExtra( "list_id", id );
-                startActivity(viewListItem);
+                Cursor cursor = (Cursor) adapter.getItem(position);
+                if(null != cursor) {
+                    Intent viewListItem = new Intent( LoadListActivity.this, ViewListItemActivity.class );
+                    int listId = cursor.getInt( 0 );
+                    viewListItem.putExtra( "list_id", listId );
+                    startActivity(viewListItem);
+                }
             }
-        });*/
+        });
 
         setListAdapter(adapter);
     }

@@ -60,7 +60,7 @@ public class CreateListActivity extends ListActivity {
             @Override
             public void onClick(View v) {
                 totalItems++;
-                ShoppingListItem newItem = new ShoppingListItem(0, "Item " + totalItems, 1, 0);
+                ShoppingListItem newItem = new ShoppingListItem(0, "Item " + totalItems, 1, 0, 0);
                 //items.add(newItem);
                 adapter.add(newItem);
             }

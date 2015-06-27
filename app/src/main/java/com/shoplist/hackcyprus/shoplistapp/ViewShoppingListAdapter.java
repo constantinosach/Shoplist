@@ -34,11 +34,11 @@ public class ViewShoppingListAdapter extends CursorAdapter {
         CheckBox isItemInBasket = (CheckBox) view.findViewById(R.id.isItemInBasketCheckBox);
 
 
-        quantity.setText( cursor.getString(cursor.getColumnIndex("quantity") )  );
-        name.setText( cursor.getString(cursor.getColumnIndex("name")) );
-        price.setText( cursor.getString(cursor.getColumnIndex("price") ) );
+        quantity.setText( cursor.getString( 3 )  );
+        name.setText( cursor.getString( 1 )  );
+        price.setText( cursor.getString( 2 ) );
 
-        boolean itemBasket = ( cursor.getString(cursor.getColumnIndex("isItemInBasket") ) == "1" ) ? true : false;
+        boolean itemBasket = false;
         isItemInBasket.setChecked( itemBasket );
 
     }
