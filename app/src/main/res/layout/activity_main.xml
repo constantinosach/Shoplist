@@ -37,7 +37,7 @@
         android:text="EXIT"
         android:id="@+id/exitButton"
         android:clickable="true"
-        android:background="#ffff6600"
+        android:background="#ffffa900"
         android:layout_marginBottom="34dp"
         android:layout_alignParentBottom="true"
         android:layout_alignRight="@+id/loadListButton"
