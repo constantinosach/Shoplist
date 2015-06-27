@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent"
-    android:background="#ffffedd5">
+    android:padding="16dp"
+    >
 
     <EditText
         android:layout_width="match_parent"
@@ -10,9 +11,9 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:text="Enter List Name"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:hint="Enter List Name" />
 
     <Button
         android:layout_width="wrap_content"
@@ -32,14 +33,13 @@
         android:id="@android:id/list"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_above="@+id/button"
-        android:background="#ffffedd5"
-        android:layout_below="@+id/textView" />
+        android:layout_below="@+id/textView"
+        android:layout_above="@+id/backButton" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="&lt;"
+        android:text="BACK"
         android:id="@+id/backButton"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
@@ -51,7 +51,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Save"
+        android:text="SAVE"
         android:id="@+id/saveButton"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
@@ -64,12 +64,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Quantity"
+        android:text="Qty"
         android:id="@+id/textView"
         android:textColor="#000000"
+        android:padding="5dp"
         android:layout_below="@+id/addItemButton"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignLeft="@android:id/list"
+        android:layout_alignStart="@android:id/list" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -78,8 +79,12 @@
         android:text="Item Name"
         android:id="@+id/textView2"
         android:textColor="#000000"
-        android:layout_alignBottom="@+id/textView"
-        android:layout_centerHorizontal="true" />
+        android:padding="5dp"
+        android:layout_above="@android:id/list"
+        android:layout_toRightOf="@+id/addItemButton"
+        android:layout_toEndOf="@+id/addItemButton"
+        android:layout_marginLeft="19dp"
+        android:layout_marginStart="19dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -88,8 +93,11 @@
         android:text="Price"
         android:id="@+id/textView3"
         android:textColor="#000000"
-        android:layout_below="@+id/addItemButton"
+        android:layout_above="@android:id/list"
         android:layout_alignRight="@+id/saveButton"
-        android:layout_alignEnd="@+id/saveButton" />
+        android:layout_alignEnd="@+id/saveButton"
+        android:layout_marginRight="20dp"
+        android:layout_marginEnd="20dp"
+        android:padding="5dp" />
 
 </RelativeLayout>
