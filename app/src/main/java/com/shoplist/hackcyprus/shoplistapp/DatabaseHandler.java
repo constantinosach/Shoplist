@@ -9,13 +9,9 @@ import com.shoplist.hackcyprus.shoplistapp.data.model.ShoppingList;
 import com.shoplist.hackcyprus.shoplistapp.data.model.ShoppingListItem;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 
 /**
  * Created by flangofas on 27/06/15.
@@ -29,7 +25,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "shoplist";
 
     // ShoppingListItem table name
-    private static final String TABLE_CONTACTS = "shoppinglistitem";
+    private static final String TABLE_SHOPLIST_ITEM = "shoppinglistitem";
 
     // ShoppingListItem Table Columns names
     private static final String KEY_ID = "id";
@@ -51,7 +47,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     // Creating Tables
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String CREATE_SHOPLISTITEMS_TABLE = "CREATE TABLE " + TABLE_CONTACTS + "("
+        String CREATE_SHOPLISTITEMS_TABLE = "CREATE TABLE " + TABLE_SHOPLIST_ITEM + "("
                 + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + KEY_NAME + " TEXT,"
                 + KEY_QUANTITY + " INT," + KEY_PRICE + " REAL" + "); ";
         String CREATE_SHOPLIST_TABLE = "CREATE TABLE " + TABLE_SHOPLIST + "("
@@ -67,7 +63,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // Drop older table if existed
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_CONTACTS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_SHOPLIST_ITEM);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_SHOPLIST);
 
 
@@ -88,7 +84,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(KEY_QUANTITY, item.getQuantity());
 
         // Inserting Row
-        db.insert(TABLE_CONTACTS, null, values);
+        db.insert(TABLE_SHOPLIST_ITEM, null, values);
         db.close(); // Closing database connection
     }
 
@@ -101,7 +97,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         fields[1] = KEY_NAME;
         fields[2] = KEY_PRICE;
         fields[3] = KEY_QUANTITY;
-        Cursor cursor = db.query(TABLE_CONTACTS, new String[]{KEY_ID,
+        Cursor cursor = db.query(TABLE_SHOPLIST_ITEM, new String[]{KEY_ID,
                         KEY_NAME, KEY_QUANTITY, KEY_PRICE}, KEY_ID + "=?",
                 new String[]{String.valueOf(id)}, null, null, null, null);
         if (cursor != null) {
@@ -111,19 +107,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         return item;
     }
-
-    // get shoppingListItems for a shoppingList
-    public Cursor getRawShoppingListItemsForList(int listId) {
-        SQLiteDatabase db = this.getReadableDatabase();
-        List<ShoppingListItem> items = new ArrayList<ShoppingListItem>();
-        String query = "Select id as _id, " + KEY_NAME +  ", " + KEY_PRICE + ", " + KEY_QUANTITY + ", " +  KEY_SHOPLIST_ID + "  from " + TABLE_CONTACTS
-                      + " WHERE " + KEY_SHOPLIST_ID + " = ?";
-
-        Cursor cursor = db.rawQuery(query, new String[] { String.valueOf(listId) });
-
-        return cursor;
-    }
-
     // Update ShoppingListItem
     public int updateShoppingListItem(ShoppingListItem item) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -132,14 +115,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(KEY_NAME, item.getName());
 
         // updating row
-        return db.update(TABLE_CONTACTS, values, KEY_ID + " = ?",
+        return db.update(TABLE_SHOPLIST_ITEM, values, KEY_ID + " = ?",
                 new String[] { String.valueOf(item.getId()) });
     }
 
     // Delete ShoppingListItem
     public void deleteShoppingListItem(ShoppingListItem item) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_CONTACTS, KEY_ID + " = ?",
+        db.delete(TABLE_SHOPLIST_ITEM, KEY_ID + " = ?",
                 new String[]{String.valueOf(item.getId())});
         db.close();
     }
@@ -148,7 +131,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public List<ShoppingListItem> getAllShoppingListItems() {
         SQLiteDatabase db = this.getReadableDatabase();
         List<ShoppingListItem> items = new ArrayList<ShoppingListItem>();
-        String query = "Select id as _id,  from " + TABLE_CONTACTS;
+        String query = "Select id as _id,  from " + TABLE_SHOPLIST_ITEM;
         Cursor cursor = db.rawQuery(query, null);
 
         if (cursor.moveToFirst()) {
@@ -161,10 +144,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return items;
     }
 
+
     //Raw data
     public Cursor getRawAllShoppingListItems() {
         SQLiteDatabase db = this.getReadableDatabase();
-        String query = "Select * from " + TABLE_CONTACTS;
+        String query = "Select * from " + TABLE_SHOPLIST_ITEM;
         Cursor cursor = db.rawQuery(query, null);
 
         return cursor;
@@ -179,21 +163,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return cursor;
     }
 
-    public List<ShoppingList> getAllShoppingLists() {
-        List<ShoppingList> shoppingLists = new ArrayList<ShoppingList>();
-
+    public Cursor findList(String name) {
         SQLiteDatabase db = this.getReadableDatabase();
-        String query = "Select id as _id, name from " + TABLE_SHOPLIST;
+        String query = "Select id as _id, name from " + TABLE_SHOPLIST
+                + " WHERE name %" + name + "%";
         Cursor cursor = db.rawQuery(query, null);
 
-        if (cursor.moveToFirst()) {
-            do {
-                ShoppingList listItem = new ShoppingList(Integer.parseInt(cursor.getString(0)), cursor.getString(1));
-                shoppingLists.add(listItem);
-            } while(cursor.moveToNext());
-        }
-
-        return shoppingLists;
+        return cursor;
     }
 
     //Create list
@@ -204,7 +180,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(KEY_SHOPLIST_NAME, list.getName());
 
         // Inserting Row
-        int newId  = (int) db.insert(TABLE_SHOPLIST, null, values);
+        int newId  = (int) db.insert(TABLE_SHOPLIST_ITEM, null, values);
         db.close(); // Closing database connection
         return newId;
     }
@@ -246,4 +222,5 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 new String[]{String.valueOf(list.getId())});
         db.close();
     }
+    
 }

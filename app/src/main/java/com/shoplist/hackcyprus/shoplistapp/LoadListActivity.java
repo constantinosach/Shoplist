@@ -1,9 +1,11 @@
 package com.shoplist.hackcyprus.shoplistapp;
 
 import android.app.ListActivity;
+import android.app.SearchManager;
 import android.database.Cursor;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,44 +15,40 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.content.Intent;
 
-import com.shoplist.hackcyprus.shoplistapp.data.model.ShoppingList;
-
-import java.util.List;
-
 
 public class LoadListActivity extends ListActivity {
 
     ListView shopListItemsListView = null;
     EditText searchBoxEditText = null;
     DatabaseHandler dbHandler;
-    private ShoppingListsCursorAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.window_3);
 
-
+        shopListItemsListView = (ListView) findViewById(R.id.shopping_list_items);
         dbHandler = new DatabaseHandler(this);
         Cursor dbCursor = dbHandler.getRawAllShoppingLists();
-        List<ShoppingList> lists = dbHandler.getAllShoppingLists();
 
-        adapter = new ShoppingListsCursorAdapter(this, dbCursor);
+        // Get the intent, verify the action and get the query
+        Intent intent = getIntent();
+        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+            String query = intent.getStringExtra(SearchManager.QUERY);
+            Log.d("query", query);
+        }
 
-        getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+        ShoppingListsCursorAdapter adapter = new ShoppingListsCursorAdapter(this, dbCursor);
+
+        /*getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Cursor cursor = (Cursor) adapter.getItem(position);
-
-                if(null != cursor) {
-                    Intent viewListItem = new Intent( LoadListActivity.this, ViewListItemActivity.class );
-                    int itemId = cursor.getInt(0);
-                    viewListItem.putExtra("list_id", itemId );
-                    startActivity(viewListItem);
-                }
-
+                Intent viewListItem = new Intent( LoadListActivity.this, ViewListItemActivity.class );
+                viewListItem.putExtra( "list_id", id );
+                startActivity(viewListItem);
             }
-        });
+        });*/
 
         setListAdapter(adapter);
     }
