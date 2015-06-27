@@ -1,6 +1,7 @@
 package com.shoplist.hackcyprus.shoplistapp;
 
 import android.content.ContentValues;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -50,6 +51,41 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         // Create tables again
         onCreate(db);
+    }
+
+    /**
+     * All CRUD(Create, Read, Update, Delete) Operations
+     */
+    public void addShoppingListItem(ShoppingListItem item) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(KEY_NAME, item.getName());
+        values.put(KEY_PRICE, item.getPrice());
+        values.put(KEY_QUANTITY, item.getQuantity());
+
+        // Inserting Row
+        db.insert(TABLE_CONTACTS, null, values);
+        db.close(); // Closing database connection
+    }
+
+    public ShoppingListItem getShoppingListItem(int id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String[] fields;
+        fields = new String[4];
+        fields[0] = KEY_ID;
+        fields[1] = KEY_NAME;
+        fields[2] = KEY_PRICE;
+        fields[3] = KEY_QUANTITY;
+        Cursor cursor = db.query(TABLE_CONTACTS, new String[] { KEY_ID,
+                        KEY_NAME, KEY_QUANTITY, KEY_PRICE }, KEY_ID + "=?",
+                new String[] { String.valueOf(id) }, null, null, null, null);
+        if (cursor != null) {
+            cursor.moveToFirst();
+        }
+        ShoppingListItem item = new ShoppingListItem(Integer.parseInt(cursor.getString(0)), cursor.getString(1), Integer.parseInt(cursor.getString(2)), cursor.getDouble(3));
+
+        return item;
     }
 
 
