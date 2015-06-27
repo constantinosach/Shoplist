@@ -9,22 +9,11 @@ public class ShoppingListItem {
     private int quantity;
     private double price;
 
-    private int listId;
-
-    public ShoppingListItem(int id, String name, int quantity, double price, int listId) {
+    public ShoppingListItem(int id, String name, int quantity, double price) {
         this.id = id;
         this.name = name;
         this.quantity = quantity;
         this.price = price;
-        this.listId = listId;
-    }
-
-    public int getListId() {
-        return listId;
-    }
-
-    public void setListId(int listId) {
-        this.listId = listId;
     }
 
     public int getId() {

@@ -32,7 +32,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String KEY_NAME = "name";
     private static final String KEY_QUANTITY = "quantity";
     private static final String KEY_PRICE = "price";
-    private static final String KEY_LIST_ID = "list_id";
 
     // ShopList table name
     private static final String TABLE_SHOPLIST = "list";
@@ -48,15 +47,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     // Creating Tables
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String CREATE_SHOPLIST_TABLE = "CREATE TABLE " + TABLE_SHOPLIST + "("
-                + KEY_SHOPLIST_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + KEY_SHOPLIST_NAME + " TEXT);";
-
         String CREATE_SHOPLISTITEMS_TABLE = "CREATE TABLE " + TABLE_CONTACTS + "("
                 + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + KEY_NAME + " TEXT,"
-                + KEY_QUANTITY + " INT," + KEY_PRICE + " REAL,"
-                + "FOREIGN KEY(" + KEY_LIST_ID  + ") REFERENCES list(id));";
-
-        String SQL_TABLES = CREATE_SHOPLISTITEMS_TABLE + " " + CREATE_SHOPLIST_TABLE;
+                + KEY_QUANTITY + " INT," + KEY_PRICE + " REAL" + ")";
+        String CREATE_SHOPLIST_TABLE = "CREATE TABLE " + TABLE_SHOPLIST + "("
+                + KEY_SHOPLIST_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + KEY_SHOPLIST_NAME + " TEXT)";
+        String SQL_TABLES = CREATE_SHOPLISTITEMS_TABLE + CREATE_SHOPLIST_TABLE;
 
         db.execSQL(SQL_TABLES);
     }
@@ -77,15 +73,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
      * All CRUD(Create, Read, Update, Delete) Operations
      */
     //Create ShoppingListItem
-    public void addShoppingListItem(ShoppingListItem item, int listId) {
+    public void addShoppingListItem(ShoppingListItem item) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 
         values.put(KEY_NAME, item.getName());
         values.put(KEY_PRICE, item.getPrice());
         values.put(KEY_QUANTITY, item.getQuantity());
-        values.put(KEY_QUANTITY, item.getQuantity());
-        values.put(KEY_LIST_ID, listId);
 
         // Inserting Row
         db.insert(TABLE_CONTACTS, null, values);
@@ -96,25 +90,18 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public ShoppingListItem getShoppingListItem(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
         String[] fields;
-        fields = new String[5];
+        fields = new String[4];
         fields[0] = KEY_ID;
         fields[1] = KEY_NAME;
         fields[2] = KEY_PRICE;
         fields[3] = KEY_QUANTITY;
-        fields[4] = KEY_LIST_ID;
         Cursor cursor = db.query(TABLE_CONTACTS, new String[]{KEY_ID,
-                        KEY_NAME, KEY_QUANTITY, KEY_PRICE, KEY_LIST_ID}, KEY_ID + "=?",
+                        KEY_NAME, KEY_QUANTITY, KEY_PRICE}, KEY_ID + "=?",
                 new String[]{String.valueOf(id)}, null, null, null, null);
         if (cursor != null) {
             cursor.moveToFirst();
         }
-        ShoppingListItem item = new ShoppingListItem(
-                Integer.parseInt(cursor.getString(0)),
-                cursor.getString(1),
-                Integer.parseInt(cursor.getString(2)),
-                cursor.getDouble(3),
-                Integer.parseInt(cursor.getString(4))
-        );
+        ShoppingListItem item = new ShoppingListItem(Integer.parseInt(cursor.getString(0)), cursor.getString(1), Integer.parseInt(cursor.getString(2)), cursor.getDouble(3));
 
         return item;
     }
@@ -147,13 +134,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         if (cursor.moveToFirst()) {
             do {
-                ShoppingListItem item = new ShoppingListItem(
-                        Integer.parseInt(cursor.getString(0)),
-                        cursor.getString(1),
-                        Integer.parseInt(cursor.getString(2)),
-                        cursor.getDouble(3),
-                        Integer.parseInt(cursor.getString(4))
-                );
+                ShoppingListItem item = new ShoppingListItem(Integer.parseInt(cursor.getString(0)), cursor.getString(1), Integer.parseInt(cursor.getString(2)), cursor.getDouble(3));
                 items.add(item);
             } while(cursor.moveToNext());
         }
