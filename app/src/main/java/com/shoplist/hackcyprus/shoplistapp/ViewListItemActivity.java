@@ -18,7 +18,7 @@ public class ViewListItemActivity extends ListActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.window_4);
 
-        shoppingListItems = (ListView) findViewById(R.id.shopping_list);
+        shoppingListItems = (ListView) findViewById(R.id.shopping_list_items);
 
         Cursor dbCursor = null;
         ViewShoppingListAdapter listAdapter = new ViewShoppingListAdapter(this, dbCursor);

@@ -27,4 +27,6 @@ public class ShoppingListsCursorAdapter extends CursorAdapter {
         TextView itemName = (TextView) view.findViewById(R.id.shopping_list_item_name);
         itemName.setText( cursor.getColumnIndexOrThrow("name") );
     }
+
+
 }

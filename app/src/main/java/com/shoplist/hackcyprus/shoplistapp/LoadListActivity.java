@@ -6,9 +6,12 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.content.Intent;
 
 
 public class LoadListActivity extends ListActivity {
@@ -21,10 +24,19 @@ public class LoadListActivity extends ListActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.window_3);
 
-        shopListItemsListView = (TextView) findViewById(R.id.shopping_list_items);
+        shopListItemsListView = (ListView) findViewById(R.id.shopping_list_items);
         Cursor dbCursor = null;
 
         ShoppingListsCursorAdapter adapter = new ShoppingListsCursorAdapter(this, dbCursor);
+        shopListItemsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent viewListItem = new Intent( LoadListActivity.this, ViewListItemActivity.class );
+                viewListItem.putExtra( "list_id", id );
+
+                startActivity(viewListItem);
+            }
+        });
     }
 
     @Override
