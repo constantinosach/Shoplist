@@ -141,26 +141,35 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         return items;
     }
-
-    public Cursor getAllShoppingListCursor() {
+    
+    //Raw data
+    public Cursor getRawAllShoppingListItems() {
         SQLiteDatabase db = this.getReadableDatabase();
-        List<ShoppingListItem> items = new ArrayList<ShoppingListItem>();
         String query = "Select * from " + TABLE_CONTACTS;
         Cursor cursor = db.rawQuery(query, null);
-        return cursor;
 
+        return cursor;
+    }
+
+    //Raw data
+    public Cursor getRawAllShoppingLists() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "Select * from " + TABLE_SHOPLIST;
+        Cursor cursor = db.rawQuery(query, null);
+
+        return cursor;
     }
 
     //Create list
-    public int addShoppingList(ShoppingList list) {
+    public void addShoppingList(ShoppingList list) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 
         values.put(KEY_SHOPLIST_NAME, list.getName());
 
         // Inserting Row
+        db.insert(TABLE_CONTACTS, null, values);
         db.close(); // Closing database connection
-        return (int) db.insert(TABLE_CONTACTS, null, values);
     }
 
     //Read list
