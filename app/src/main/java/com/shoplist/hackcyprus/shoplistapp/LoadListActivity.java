@@ -140,7 +140,7 @@ public class LoadListActivity extends ListActivity {
         int position = info.position;
 
         if(id == R.id.editList) {
-            Cursor cursor = (Cursor) getListAdapter().getItem(0);
+            Cursor cursor = (Cursor) getListAdapter().getItem(position);
             Intent viewListItem = new Intent(LoadListActivity.this, CreateListActivity.class);
             int listId = cursor.getInt(0);
             viewListItem.putExtra("list_id", listId);

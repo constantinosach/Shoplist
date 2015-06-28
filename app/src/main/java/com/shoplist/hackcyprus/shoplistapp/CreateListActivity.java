@@ -55,16 +55,17 @@ public class CreateListActivity extends ListActivity {
 
         shoppingList = new ShoppingList(listId, "New List");
 
-        if( null != intentAction || intentAction.length() > 0 ) {
+        if( null != intentAction && intentAction.length() > 0 ) {
             action = intentAction;
         }
         if(0 != intentListId) {
             listId = intentListId;
-            dbHandler.getShoppingList(listId);
+            shoppingList = dbHandler.getShoppingList(listId);
             items = dbHandler.getShoppingListItemsForList(listId);
+            totalItems = items.size();
         }
 
-        shoppingListName.setText(shoppingList.getName());
+
 
         //newItemsList = (ListView) findViewById(R.id.list);
         final NewShoppingListItemsAdapter adapter = new NewShoppingListItemsAdapter(this, items);
@@ -75,6 +76,8 @@ public class CreateListActivity extends ListActivity {
         saveButtton = (Button) findViewById(R.id.saveButton);
         backButton  = (Button) findViewById(R.id.backButton);
         shoppingListName = (EditText) findViewById(R.id.enterListName);
+
+        shoppingListName.setText(shoppingList.getName());
 
         addItemButton.setOnClickListener(new View.OnClickListener() {
             @Override
