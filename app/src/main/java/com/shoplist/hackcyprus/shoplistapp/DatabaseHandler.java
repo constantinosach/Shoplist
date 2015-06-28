@@ -128,6 +128,26 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return cursor;
     }
 
+    public ArrayList<ShoppingListItem> getShoppingListItemsForList(int listId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        ArrayList<ShoppingListItem> items = new ArrayList<ShoppingListItem>();
+        Cursor cursor = db.rawQuery( "SELECT " + KEY_ID + " as _id, " + KEY_NAME + ", " + KEY_QUANTITY + ", " + KEY_PRICE + ", " + KEY_SHOPLIST_ID +
+                        " from " + TABLE_SHOPLIST_ITEM +
+                        " WHERE " + KEY_LIST_ID + " = ? ",
+                new String[] { String.valueOf( listId ) });
+        if(cursor.moveToFirst()) {
+            do{
+                // int id, String name, int quantity, double price, int listId
+                items.add(
+                        new ShoppingListItem(
+                         cursor.getInt(0), cursor.getString(1), cursor.getInt(2), cursor.getDouble(3), cursor.getInt(4))
+                );
+            }while( cursor.moveToNext());
+        }
+
+        return items;
+    }
+
     // Update ShoppingListItem
     public int updateShoppingListItem(ShoppingListItem item) {
         SQLiteDatabase db = this.getWritableDatabase();

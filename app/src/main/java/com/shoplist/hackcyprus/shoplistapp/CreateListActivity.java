@@ -21,6 +21,7 @@ import com.shoplist.hackcyprus.shoplistapp.data.model.ShoppingList;
 import com.shoplist.hackcyprus.shoplistapp.data.model.ShoppingListItem;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class CreateListActivity extends ListActivity {
@@ -35,6 +36,8 @@ public class CreateListActivity extends ListActivity {
     private Button addItemButton;
 
     private int totalItems = 0;
+    private String action = "create";
+    private int listId = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +48,23 @@ public class CreateListActivity extends ListActivity {
         items = new ArrayList<ShoppingListItem>();
 
         dbHandler = new DatabaseHandler(this);
+
+        Intent intent = getIntent();
+        String intentAction = intent.getStringExtra("action");
+        int intentListId = intent.getIntExtra("list_id", 0);
+
+        ShoppingList shoppingList = new ShoppingList(listId, "New List");
+
+        if( null != intentAction || intentAction.length() > 0 ) {
+            action = intentAction;
+        }
+        if(0 != intentListId) {
+            listId = intentListId;
+            dbHandler.getShoppingList(listId);
+            items = dbHandler.getShoppingListItemsForList(listId);
+        }
+
+        shoppingListName.setText(shoppingList.getName());, 
 
         //newItemsList = (ListView) findViewById(R.id.list);
         final NewShoppingListItemsAdapter adapter = new NewShoppingListItemsAdapter(this, items);
@@ -60,7 +80,7 @@ public class CreateListActivity extends ListActivity {
             @Override
             public void onClick(View v) {
                 totalItems++;
-                ShoppingListItem newItem = new ShoppingListItem(0, "Item " + totalItems, 1, 0, 0);
+                ShoppingListItem newItem = new ShoppingListItem(0, "Item " + totalItems, 1, 0, listId);
                 //items.add(newItem);
                 adapter.add(newItem);
             }
@@ -81,23 +101,40 @@ public class CreateListActivity extends ListActivity {
                     return;
                 }
 
-                ShoppingList newList = new ShoppingList(0, shoppingListName.getText().toString());
-                int newId = dbHandler.addShoppingList(newList);
-                newList.setId(newId);
 
-                if( newId > 0 ) {
+
+                if(  0 != listId) {
+                    shoppingList = dbHandler.getShoppingList(listId);
+                    dbHandler.updateShoppingList(shoppingList);
                     ShoppingListItem item;
                     for(int i = 0; i < adapter.getCount(); i++) {
                         item = adapter.getItem( i );
-                        dbHandler.addShoppingListItem( item,  newId);
+                        if( 0 == item.getId() ) {
+                            dbHandler.addShoppingListItem( item,  listId);
+                        } else {
+                            dbHandler.updateShoppingListItem(item);
+                        }
+                    }
+                } else {
+
+                    int newId = dbHandler.addShoppingList(shoppingList);
+                    shoppingList.setId(newId);
+
+                    if( newId > 0 ) {
+                        ShoppingListItem item;
+                        for(int i = 0; i < adapter.getCount(); i++) {
+                            item = adapter.getItem( i );
+                            dbHandler.addShoppingListItem( item,  newId);
+                        }
+
+                        Toast msg = Toast.makeText(CreateListActivity.this, "shopping list successfully added", Toast.LENGTH_LONG);
+                        msg.show();
+                        Intent backIntent = new Intent(CreateListActivity.this, MainActivity.class);
+                        startActivity(backIntent);
                     }
 
-                    Toast msg = Toast.makeText(CreateListActivity.this, "shopping list successfully added", Toast.LENGTH_LONG);
-                    msg.show();
-                    Intent backIntent = new Intent(CreateListActivity.this, MainActivity.class);
-                    startActivity(backIntent);
-
                 }
+
 
 
             }

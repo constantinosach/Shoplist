@@ -3,10 +3,13 @@ package com.shoplist.hackcyprus.shoplistapp;
 import android.app.ListActivity;
 import android.app.SearchManager;
 import android.database.Cursor;
+import android.database.CursorIndexOutOfBoundsException;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Adapter;
@@ -58,19 +61,21 @@ public class LoadListActivity extends ListActivity {
         });
 
         final ShoppingListsCursorAdapter adapter = new ShoppingListsCursorAdapter(this, dbCursor);
-
-        getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        ListView list = getListView();
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Cursor cursor = (Cursor) adapter.getItem(position);
-                if(null != cursor) {
-                    Intent viewListItem = new Intent( LoadListActivity.this, ViewListItemActivity.class );
-                    int listId = cursor.getInt( 0 );
-                    viewListItem.putExtra( "list_id", listId );
+                if (null != cursor) {
+                    Intent viewListItem = new Intent(LoadListActivity.this, ViewListItemActivity.class);
+                    int listId = cursor.getInt(0);
+                    viewListItem.putExtra("list_id", listId);
                     startActivity(viewListItem);
                 }
             }
         });
+
+        this.registerForContextMenu(list);
 
         setListAdapter(adapter);
 
@@ -93,10 +98,8 @@ public class LoadListActivity extends ListActivity {
                     Toast toast = Toast.makeText(getApplicationContext(), "No results were found.", Toast.LENGTH_SHORT);
                     toast.show();
                 }
-
                 return false;
             }
-
         });
     }
 
@@ -121,4 +124,36 @@ public class LoadListActivity extends ListActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v,
+                                    ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater inflater =getMenuInflater();
+        inflater.inflate(R.menu.list_context_menu, menu);
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        int position = info.position;
+
+        if(id == R.id.editList) {
+            Cursor cursor = (Cursor) getListAdapter().getItem(0);
+            Intent viewListItem = new Intent(LoadListActivity.this, CreateListActivity.class);
+            int listId = cursor.getInt(0);
+            viewListItem.putExtra("list_id", listId);
+            viewListItem.putExtra("action", "edit");
+            startActivity(viewListItem);
+        }
+
+        if(id == R.id.deleteList) {
+            Toast msg = Toast.makeText(LoadListActivity.this, "Deleting List", Toast.LENGTH_LONG);
+            msg.show();
+        }
+
+        return true;
+    }
+
 }
