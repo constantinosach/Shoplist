@@ -36,9 +36,14 @@
         android:checked="false"
         android:paddingLeft="10dp"
         android:layout_alignParentTop="true"
+<<<<<<< HEAD
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+=======
         android:layout_toRightOf="@+id/itemPriceText"
         android:layout_toEndOf="@+id/itemPriceText"
         android:layout_marginLeft="40dp"
         android:layout_marginStart="40dp" />
+>>>>>>> 77f15733fa6043202fa51640b5a5a05bdd506dad
 
 </RelativeLayout>

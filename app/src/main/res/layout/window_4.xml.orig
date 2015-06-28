@@ -85,7 +85,14 @@
             android:layout_width="100dp"
             android:layout_height="50dp"
             android:text="Back"
-			android:id="@+id/backToLoadListButton"
+<<<<<<< HEAD
+            android:id="@+id/backToLoadListButton"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+=======
+            android:id="@+id/button3"
+>>>>>>> 77f15733fa6043202fa51640b5a5a05bdd506dad
             android:background="#ffffa900"
             android:textColor="#000000"
             android:textStyle="bold"
