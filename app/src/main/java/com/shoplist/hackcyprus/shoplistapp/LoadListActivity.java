@@ -9,20 +9,27 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.content.Intent;
+import android.widget.Toast;
 
 
 public class LoadListActivity extends ListActivity {
 
     ListView shopListItemsListView = null;
-    EditText searchBoxEditText = null;
     Button backButton = null;
+    SearchView searchView = null;
+
     DatabaseHandler dbHandler;
+    private Intent searchIntent;
+
+    public static final String QUERY_KEY = "query";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +73,31 @@ public class LoadListActivity extends ListActivity {
         });
 
         setListAdapter(adapter);
+
+        searchView = ( SearchView ) findViewById(R.id.searchView);
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                //Log.e("onQueryTextChange", "called");
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Cursor cLists = dbHandler.findList(query);
+                if (cLists.moveToFirst()) {
+                    adapter.swapCursor(cLists);
+                } else {
+                    Toast toast = Toast.makeText(getApplicationContext(), "No results were found.", Toast.LENGTH_SHORT);
+                    toast.show();
+                }
+
+                return false;
+            }
+
+        });
     }
 
     @Override
