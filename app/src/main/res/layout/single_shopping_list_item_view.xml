@@ -2,26 +2,12 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="80dp"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="List name"
-        android:id="@+id/listName"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:background="#FFA81A" />
 
     <TextView
         android:layout_width="100dp"
         android:layout_height="60dp"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Quantity"
         android:id="@+id/itemQuantityText"
-        android:layout_below="@+id/listName"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
@@ -29,9 +15,7 @@
         android:layout_width="100dp"
         android:layout_height="60dp"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Item Name"
         android:id="@+id/itemNameText"
-        android:layout_below="@+id/listName"
         android:layout_toRightOf="@+id/itemQuantityText"
         android:layout_toEndOf="@+id/itemQuantityText" />
 
@@ -39,9 +23,7 @@
         android:layout_width="100dp"
         android:layout_height="60dp"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Price"
         android:id="@+id/itemPriceText"
-        android:layout_below="@+id/listName"
         android:layout_toRightOf="@+id/itemNameText"
         android:layout_toEndOf="@+id/itemNameText" />
 
@@ -49,9 +31,11 @@
         android:layout_width="100dp"
         android:layout_height="60dp"
         android:id="@+id/isItemInBasketCheckBox"
-        android:layout_below="@+id/listName"
+        android:clickable="true"
+        android:layout_alignParentTop="true"
         android:layout_toRightOf="@+id/itemPriceText"
         android:layout_toEndOf="@+id/itemPriceText"
-        android:clickable="true" />
+        android:layout_marginLeft="38dp"
+        android:layout_marginStart="38dp" />
 
 </RelativeLayout>
