@@ -37,6 +37,8 @@
         android:paddingLeft="10dp"
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@+id/itemPriceText"
-        android:layout_toEndOf="@+id/itemPriceText" />
+        android:layout_toEndOf="@+id/itemPriceText"
+        android:layout_marginLeft="40dp"
+        android:layout_marginStart="40dp" />
 
 </RelativeLayout>
