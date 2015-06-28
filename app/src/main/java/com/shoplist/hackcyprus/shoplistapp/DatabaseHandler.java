@@ -193,7 +193,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public Cursor findList(String name) {
         SQLiteDatabase db = this.getReadableDatabase();
         String query = "Select id as _id, name from " + TABLE_SHOPLIST
-                + " WHERE name %" + name + "%";
+                + " WHERE name LIKE \"%" + name + "%\";";
         Cursor cursor = db.rawQuery(query, null);
 
         return cursor;
@@ -210,6 +210,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         int newId  = (int) db.insert(TABLE_SHOPLIST, null, values);
         db.close(); // Closing database connection
         return newId;
+
+        
     }
 
     //Read list
