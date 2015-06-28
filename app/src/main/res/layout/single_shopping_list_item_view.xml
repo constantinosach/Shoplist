@@ -30,13 +30,13 @@
 
     <CheckBox
         android:layout_width="100dp"
-        android:layout_height="60dp"
+        android:layout_height="20dp"
         android:id="@+id/isItemInBasketCheckBox"
         android:clickable="true"
         android:checked="false"
         android:paddingLeft="10dp"
         android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/itemPriceText"
-        android:layout_toEndOf="@+id/itemPriceText" />
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>
