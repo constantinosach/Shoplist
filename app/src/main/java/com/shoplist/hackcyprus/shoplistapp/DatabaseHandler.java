@@ -50,10 +50,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         String CREATE_SHOPLISTITEMS_TABLE = "CREATE TABLE " + TABLE_SHOPLIST_ITEM + "("
                 + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + KEY_NAME + " TEXT,"
-                + KEY_QUANTITY + " INT," + KEY_PRICE + " REAL" + "); ";
-        String CREATE_SHOPLIST_TABLE = "CREATE TABLE " + TABLE_SHOPLIST + "("
-                + KEY_SHOPLIST_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + KEY_SHOPLIST_NAME + " TEXT, "
+                + KEY_QUANTITY + " INT," + KEY_PRICE + " REAL, " + KEY_LIST_ID + " INTEGER, "
                 + "FOREIGN KEY(" + KEY_LIST_ID  + ") REFERENCES list(id));";
+
+        String CREATE_SHOPLIST_TABLE = "CREATE TABLE " + TABLE_SHOPLIST + "("
+                + KEY_SHOPLIST_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + KEY_SHOPLIST_NAME + " TEXT);";
 
         db.execSQL(CREATE_SHOPLIST_TABLE);
         db.execSQL(CREATE_SHOPLISTITEMS_TABLE);
@@ -119,8 +120,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     public Cursor getRawShoppingListItemsForList(int listId) {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery( "SELECT id as _id, " + KEY_NAME + ", " + KEY_QUANTITY + ", " + KEY_PRICE + ", " + KEY_SHOPLIST_ID + ", "
-         + " WHERE " + KEY_SHOPLIST_ID + " = ? ",
+        Cursor cursor = db.rawQuery( "SELECT " + KEY_ID + " as _id, " + KEY_NAME + ", " + KEY_QUANTITY + ", " + KEY_PRICE + ", " + KEY_SHOPLIST_ID +
+                        " from " + TABLE_SHOPLIST_ITEM +
+                        " WHERE " + KEY_LIST_ID + " = ? ",
         new String[] { String.valueOf( listId ) });
 
         return cursor;
@@ -205,7 +207,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(KEY_SHOPLIST_NAME, list.getName());
 
         // Inserting Row
-        int newId  = (int) db.insert(TABLE_SHOPLIST_ITEM, null, values);
+        int newId  = (int) db.insert(TABLE_SHOPLIST, null, values);
         db.close(); // Closing database connection
         return newId;
     }
