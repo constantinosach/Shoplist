@@ -7,12 +7,15 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 
 
 public class ViewListItemActivity extends ListActivity {
 
     private DatabaseHandler dbHandler;
+    private  Button backButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +31,17 @@ public class ViewListItemActivity extends ListActivity {
 
         ViewShoppingListAdapter listAdapter = new ViewShoppingListAdapter(this, dbCursor);
         setListAdapter(listAdapter);
+
+        backButton = (Button) findViewById(R.id.backToLoadListButton);
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent backIntent = new Intent(ViewListItemActivity.this, LoadListActivity.class);
+                startActivity(backIntent);
+                finish();
+            }
+        });
     }
 
     @Override

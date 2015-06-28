@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -20,6 +21,7 @@ public class LoadListActivity extends ListActivity {
 
     ListView shopListItemsListView = null;
     EditText searchBoxEditText = null;
+    Button backButton = null;
     DatabaseHandler dbHandler;
 
     @Override
@@ -36,6 +38,17 @@ public class LoadListActivity extends ListActivity {
             String query = intent.getStringExtra(SearchManager.QUERY);
             Log.d("query", query);
         }
+
+        backButton = (Button) findViewById(R.id.button3);
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent backIntent = new Intent(LoadListActivity.this, MainActivity.class);
+                startActivity(backIntent);
+                finish();
+            }
+        });
 
         final ShoppingListsCursorAdapter adapter = new ShoppingListsCursorAdapter(this, dbCursor);
 
@@ -58,7 +71,7 @@ public class LoadListActivity extends ListActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_load_list, menu);
+        getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 

@@ -108,6 +108,7 @@ public class CreateListActivity extends ListActivity {
             public void onClick(View v) {
                 Intent backIntent = new Intent(CreateListActivity.this, MainActivity.class);
                 startActivity(backIntent);
+                finish();
             }
         });
 
