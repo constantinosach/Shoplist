@@ -30,7 +30,7 @@
 
     <CheckBox
         android:layout_width="100dp"
-        android:layout_height="60dp"
+        android:layout_height="20dp"
         android:id="@+id/isItemInBasketCheckBox"
         android:clickable="true"
         android:checked="false"

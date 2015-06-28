@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Adapter;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SearchView;
@@ -22,7 +23,9 @@ import android.widget.Toast;
 public class LoadListActivity extends ListActivity {
 
     ListView shopListItemsListView = null;
+    Button backButton = null;
     SearchView searchView = null;
+
     DatabaseHandler dbHandler;
     private Intent searchIntent;
 
@@ -35,6 +38,24 @@ public class LoadListActivity extends ListActivity {
 
         dbHandler = new DatabaseHandler(this);
         Cursor dbCursor = dbHandler.getRawAllShoppingLists();
+
+        // Get the intent, verify the action and get the query
+        Intent intent = getIntent();
+        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+            String query = intent.getStringExtra(SearchManager.QUERY);
+            Log.d("query", query);
+        }
+
+        backButton = (Button) findViewById(R.id.button3);
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent backIntent = new Intent(LoadListActivity.this, MainActivity.class);
+                startActivity(backIntent);
+                finish();
+            }
+        });
 
         final ShoppingListsCursorAdapter adapter = new ShoppingListsCursorAdapter(this, dbCursor);
 
@@ -82,7 +103,7 @@ public class LoadListActivity extends ListActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_load_list, menu);
+        getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
