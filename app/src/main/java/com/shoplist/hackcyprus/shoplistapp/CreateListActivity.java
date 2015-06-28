@@ -53,7 +53,7 @@ public class CreateListActivity extends ListActivity {
         String intentAction = intent.getStringExtra("action");
         int intentListId = intent.getIntExtra("list_id", 0);
 
-        ShoppingList shoppingList = new ShoppingList(listId, "New List");
+        shoppingList = new ShoppingList(listId, "New List");
 
         if( null != intentAction || intentAction.length() > 0 ) {
             action = intentAction;
@@ -64,7 +64,7 @@ public class CreateListActivity extends ListActivity {
             items = dbHandler.getShoppingListItemsForList(listId);
         }
 
-        shoppingListName.setText(shoppingList.getName());, 
+        shoppingListName.setText(shoppingList.getName());
 
         //newItemsList = (ListView) findViewById(R.id.list);
         final NewShoppingListItemsAdapter adapter = new NewShoppingListItemsAdapter(this, items);
