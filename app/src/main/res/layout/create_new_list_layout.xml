@@ -100,4 +100,13 @@
         android:layout_marginEnd="20dp"
         android:padding="5dp" />
 
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageButton"
+        android:src="@drawable/camera"
+        android:layout_below="@+id/enterListName"
+        android:layout_alignLeft="@+id/textView3"
+        android:layout_alignStart="@+id/textView3" />
+
 </RelativeLayout>
