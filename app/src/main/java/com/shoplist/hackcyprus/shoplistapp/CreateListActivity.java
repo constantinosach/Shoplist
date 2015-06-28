@@ -85,11 +85,20 @@ public class CreateListActivity extends ListActivity {
                 int newId = dbHandler.addShoppingList(newList);
                 newList.setId(newId);
 
-                Toast msg = Toast.makeText(CreateListActivity.this, "shopping list successfully added", Toast.LENGTH_LONG);
-                msg.show();
+                if( newId > 0 ) {
+                    ShoppingListItem item;
+                    for(int i = 0; i < adapter.getCount(); i++) {
+                        item = adapter.getItem( i );
+                        dbHandler.addShoppingListItem( item,  newId);
+                    }
 
-                Intent backIntent = new Intent(CreateListActivity.this, MainActivity.class);
-                startActivity(backIntent);
+                    Toast msg = Toast.makeText(CreateListActivity.this, "shopping list successfully added", Toast.LENGTH_LONG);
+                    msg.show();
+                    Intent backIntent = new Intent(CreateListActivity.this, MainActivity.class);
+                    startActivity(backIntent);
+
+                }
+
 
             }
         });
